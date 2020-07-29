@@ -1,14 +1,15 @@
 import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
 
-import dadosInicial from './data/dados_iniciais.json'
-import Menu from './components/Menu'
-import Footer from './components/Footer'
-import Carousel from './components/Carousel'
-import BannerMain from './components/BannerMain'
+import dadosInicial from '../../data/dados_iniciais.json'
+import Menu from '../../components/Menu'
+import Footer from '../../components/Footer'
+import Carousel from '../../components/Carousel'
+import BannerMain from '../../components/BannerMain'
 
-function App() {
+function Home() {
   return (
-    <>
+    <BrowserRouter>
       <Menu />
       <BannerMain
         videoTitle={dadosInicial.categorias[0].videos[0].titulo}
@@ -40,8 +41,8 @@ function App() {
         category={dadosInicial.categorias[5]}
       ></Carousel>
       <Footer />
-    </>
+    </BrowserRouter>
   )
 }
 
-export default App
+export default Home
