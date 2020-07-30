@@ -1,24 +1,83 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import PageDefault from '../../../components/PageDefault'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import PageDefault from '../../../components/PageDefault';
+import FormField from '../../../components/FormField';
+import Button from '../../../components/Button';
 
 function CadastroCategoria() {
+  const valoresIniciais = {
+    nome: '',
+    descricao: '',
+    cor: '',
+  };
+
+  const [categorias, setCategorias] = useState([]);
+  const [values, setValues] = useState(valoresIniciais);
+
+  const setValue = (chave, valor) => {
+    setValues({
+      ...values,
+      [chave]: valor,
+    });
+  };
+
+  const handleChange = (infoDoEvento) => {
+    setValue(
+      infoDoEvento.target.getAttribute('name'),
+      infoDoEvento.target.value,
+    );
+  };
+
+  const handleSubmit = (infoDoEvento) => {
+    infoDoEvento.preventDefault();
+    setCategorias([...categorias, values]);
+
+    setValues(valoresIniciais);
+  };
   return (
     <PageDefault>
-      <h1>Cadastro de Categoria</h1>
+      <h1>
+        Cadastro de Categoria:
+        {values.nome}
+      </h1>
 
-      <form>
-        <label>
-          Nome da Categoria:
-          <input type='text' />
-        </label>
+      <form onSubmit={handleSubmit}>
+        <FormField
+          label="Nome da Categoria"
+          type="text"
+          name="nome"
+          value={values.nome}
+          onChange={handleChange}
+        />
 
-        <button>Cadastrar</button>
+        <FormField
+          label="Descricao"
+          type="textArea"
+          name="descricao"
+          value={values.descricao}
+          onChange={handleChange}
+        />
+
+        <FormField
+          label="Cor"
+          type="color"
+          name="cor"
+          value={values.cor}
+          onChange={handleChange}
+        />
+
+        <Button as="a">Cadastrar</Button>
       </form>
 
-      <Link to='/'>Ir para home</Link>
+      <ul>
+        {categorias.map((categoria) => (
+          <li key={`${categoria}`}>{categoria.nome}</li>
+        ))}
+      </ul>
+
+      <Link to="/">Ir para home</Link>
     </PageDefault>
-  )
+  );
 }
 
-export default CadastroCategoria
+export default CadastroCategoria;
